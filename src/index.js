@@ -5,10 +5,12 @@ const app = express();
 
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const games = require('./routes/games');
 
 app.use(express.json());
-app.use('/api/users/', users);
+app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/game', games);
 
 if(!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwt private key is not defined');
