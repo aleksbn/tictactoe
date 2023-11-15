@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"test_opponent@test.net\",\r\n    \"nickname\": \"rex\",\r\n    \"password\": \"12345\"\r\n}",
+					"raw": "{\r\n    \"email\": \"denis@test.net\",\r\n    \"nickname\": \"denis\",\r\n    \"password\": \"denissifra\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -43,7 +43,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"test_opponent@test.net\",\r\n    \"password\": \"12345\"\r\n}",
+					"raw": "{\r\n    \"email\": \"aleksbn@test.net\",\r\n    \"password\": \"alekssifra\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,7 +83,7 @@
 				"header": [
 					{
 						"key": "x-auth-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUzNGMzZWM4YjJmYmM2YjYxNjMzNzkiLCJpYXQiOjE2OTk5NjgyOTh9.CPkCGRVydb4qFIK_f1k1BZ_4Dfnz--LEKmbWEk_CyZ4",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NmZlNjcwOTNiY2ZlMDc3ZTY3MmEiLCJpYXQiOjE3MDAwMzMwMzN9.zB0aGNG0AciwXjFs24nRt7qASBDl92nrNiROJvO9Zd0",
 						"type": "text"
 					}
 				],
@@ -97,7 +97,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/game/create/65534c3ec8b2fbc6b6163379",
+					"raw": "http://localhost:3000/api/games/create/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -105,9 +105,9 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"game",
+						"games",
 						"create",
-						"65534c3ec8b2fbc6b6163379"
+						""
 					]
 				}
 			},
@@ -115,18 +115,21 @@
 		},
 		{
 			"name": "Join a game",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "x-auth-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUzN2E2Mjg4ZDk3ZThkYzU4YWU0MzMiLCJpYXQiOjE2OTk5Njk2NDl9.1YdGK5RMQZNFHbQU3xugC1fTjLTD8w1_EMZ98U5pqCk",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NmZlNjcwOTNiY2ZlMDc3ZTY3MmEiLCJpYXQiOjE3MDAwMzc4NjN9.23SswLbtbA7k6dFU5mCO-3B5ptqjrs6LnLI2b1WuNZw",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"opponentId\": \"65537a6288d97e8dc58ae433\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -134,7 +137,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/game/join/65537b53d006a58d6753e5e9",
+					"raw": "http://localhost:3000/api/games/join/655471527093bcfe077e673a",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -142,9 +145,120 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"game",
+						"games",
 						"join",
-						"65537b53d006a58d6753e5e9"
+						"655471527093bcfe077e673a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make move Player 1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NmZmYzcwOTNiY2ZlMDc3ZTY3MmQiLCJpYXQiOjE3MDAwNDA1MjF9.1kblWWLMxCkD0dPHqzxjw7xxvm50q4YqEijUVEIybUY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"xCoord\": \"2\",\r\n    \"yCoord\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/games/makeamove/655471527093bcfe077e673a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"games",
+						"makeamove",
+						"655471527093bcfe077e673a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make move Player 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NzAxZDcwOTNiY2ZlMDc3ZTY3MzMiLCJpYXQiOjE3MDAwNDA4MTZ9.CMTR7YSwIoTfDZo5v9qQ7rl7F7NS99ahzn0L4POr0pc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"xCoord\": \"0\",\r\n    \"yCoord\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/games/makeamove/655471527093bcfe077e673a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"games",
+						"makeamove",
+						"655471527093bcfe077e673a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make move Single Player",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NmZlNjcwOTNiY2ZlMDc3ZTY3MmEiLCJpYXQiOjE3MDAwNTQwODJ9.Gm-h_JKTf_txoMYCrv7hIOsPU74v7vsQDYJN3NAzDeY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"xCoord\": \"1\",\r\n    \"yCoord\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/games/makeamove/655471467093bcfe077e6738",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"games",
+						"makeamove",
+						"655471467093bcfe077e6738"
 					]
 				}
 			},

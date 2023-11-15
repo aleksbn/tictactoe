@@ -2,6 +2,10 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const moveSchema = new mongoose.Schema({
+  playerId: {
+    type: String,
+    required: true,
+  },
   xCoord: {
     type: Number,
     min: 0,
