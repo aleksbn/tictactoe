@@ -86,6 +86,13 @@ router.post('/makeamove/:id', auth, async (req, res) => {
       .send('That game does not exist. Try creating one instead!');
   }
 
+  // Ako igrac nije dio igre
+  if (
+    game.creatorId !== req.user._id &&
+    (game.opponentId !== undefined && game.opponentId !== req.user._id)
+  )
+    return res.status(403).send("You're not a part of this game.");
+
   // Ukoliko je igra vec gotova i ima pobjednika
   if (game.winnerId !== undefined)
     return res.status(403).send('This game has already been finished.');
@@ -94,6 +101,15 @@ router.post('/makeamove/:id', auth, async (req, res) => {
   move.playerId = req.user._id;
 
   if (game.moves === undefined) game.moves = [];
+
+  // Ako nije taj korisnik na redu (prvo igranje ne racunamo - za sad)
+  if (
+    game.moves.length !== 0 &&
+    game.moves[game.moves.length - 1].playerId === req.user._id
+  )
+    return res
+      .status(403)
+      .send("It's not your turn! Wait for the other player to make a move.");
 
   // Ako je taj potez ranije odigran, prekini izvrsavanje
   if (
