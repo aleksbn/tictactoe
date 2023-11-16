@@ -1,19 +1,19 @@
-const auth = require('../middleware/auth');
-const _ = require('lodash');
-const { Game, validate } = require('../models/game');
-const express = require('express');
-// const { model } = require('mongoose');
+import auth from '../middleware/auth';
+import _ from 'lodash';
+import { Game, GameModel, Move, validate } from '../models/game';
+import express from 'express';
+import { checkForWinner, pcMove } from '../helpers/game-helper';
 const router = express.Router();
-const { checkForWinner, pcMove } = require('../helpers/game-helper');
+// const { model } = require('mongoose');
 
-router.post('/create/', auth, async (req, res) => {
+router.post('/create/', auth, async (req: any, res) => {
   const { error } = validate({
     creatorId: req.user._id,
     isAgainstPC: req.body.isAgainstPC,
   });
   if (error) return res.status(400).send(error.details[0].message);
 
-  let game = new Game({
+  let game = new GameModel({
     creatorId: req.user._id,
     isAgainstPC: req.body.isAgainstPC,
   });
@@ -25,11 +25,11 @@ router.post('/create/', auth, async (req, res) => {
 // Igri se mozemo pridruziti u sljedecim slucajevima:
 // 1. Ako smo kreirali igru
 // 2. Ako je slobodno mjesto drugog igraca, a igra nije oznacena kao single player
-router.get('/join/:id', auth, async (req, res) => {
+router.get('/join/:id', auth, async (req: any, res) => {
   // Pronalazimo igru na osnovu ID-ja iz params
-  let game = undefined;
+  let game: any;
   try {
-    game = await Game.findById(req.params.id);
+    game = await GameModel.findById(req.params.id);
   } catch (ex) {
     return res
       .status(404)
@@ -75,11 +75,11 @@ router.get('/join/:id', auth, async (req, res) => {
     );
 });
 
-router.post('/makeamove/:id', auth, async (req, res) => {
+router.post('/makeamove/:id', auth, async (req: any, res) => {
   // Pronalazimo igru na osnovu ID-ja iz params
-  let game = undefined;
+  let game: any;
   try {
-    game = await Game.findById(req.params.id);
+    game = await GameModel.findById(req.params.id);
   } catch (ex) {
     return res
       .status(404)
@@ -113,7 +113,7 @@ router.post('/makeamove/:id', auth, async (req, res) => {
 
   // Ako je taj potez ranije odigran, prekini izvrsavanje
   if (
-    game.moves.some((moveFromDb) => {
+    game.moves.some((moveFromDb: Move) => {
       return (
         moveFromDb.xCoord === +move.xCoord && moveFromDb.yCoord === +move.yCoord
       );
@@ -141,4 +141,4 @@ router.post('/makeamove/:id', auth, async (req, res) => {
   return res.status(result.status).send(result.text);
 });
 
-module.exports = router;
+export default router;
