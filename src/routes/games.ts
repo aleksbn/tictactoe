@@ -4,13 +4,9 @@ import { Game, GameModel, Move, validate } from '../models/game';
 import express from 'express';
 import { checkForWinner, pcMove } from '../helpers/game-helper';
 const router = express.Router();
-// const { model } = require('mongoose');
 
 router.post('/create/', auth, async (req: any, res) => {
-  const { error } = validate({
-    creatorId: req.user._id,
-    isAgainstPC: req.body.isAgainstPC,
-  });
+  const { error } = validate(new Game(req.user._id, req.body.isAgainstPC));
   if (error) return res.status(400).send(error.details[0].message);
 
   let game = new GameModel({
@@ -89,7 +85,8 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
   // Ako igrac nije dio igre
   if (
     game.creatorId !== req.user._id &&
-    (game.opponentId !== undefined && game.opponentId !== req.user._id)
+    game.opponentId !== undefined &&
+    game.opponentId !== req.user._id
   )
     return res.status(403).send("You're not a part of this game.");
 
@@ -138,7 +135,7 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
 
   // Sacuvaj promjene u bazi i vrati rezultat na front
   await game.save();
-  return res.status(result.status).send(result.text);
+  return res.status(result.status).send(result.statusText);
 });
 
 export default router;

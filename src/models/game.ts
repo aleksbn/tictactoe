@@ -2,17 +2,23 @@ import Joi from 'joi';
 import mongoose from 'mongoose';
 
 interface IMove {
-  playerId: string,
-  xCoord: number,
-  yCoord: number
+  playerId: string;
+  xCoord: number;
+  yCoord: number;
 }
 
 interface IGame {
-  creatorId: string,
-  isAgainstPC: boolean,
-  opponentId?: string,
-  winnerId?: string,
-  moves?: Move[]
+  creatorId: string;
+  isAgainstPC: boolean;
+  opponentId?: string;
+  winnerId?: string;
+  moves?: Move[];
+}
+
+interface IGameResult {
+  winnerId?: string;
+  statusText: string;
+  status: number;
 }
 
 class Move implements IMove {
@@ -27,13 +33,24 @@ class Move implements IMove {
   }
 }
 
+class GameResult implements IGameResult {
+  winnerId?: string | undefined;
+  statusText: string;
+  status: number;
+
+  constructor(statusText: string, status: number) {
+    this.statusText = statusText;
+    this.status = status;
+  }
+}
+
 class Game implements IGame {
   creatorId: string;
   isAgainstPC: boolean;
   opponentId?: string | undefined;
   winnerId?: string | undefined;
   moves?: Move[] | undefined;
-  
+
   constructor(creatorId: string, isAgainstPC: boolean) {
     this.creatorId = creatorId;
     this.isAgainstPC = isAgainstPC;
@@ -89,4 +106,4 @@ function validateGame(game: Game) {
   return schema.validate(game);
 }
 
-export { GameModel, Game, Move, validateGame as validate };
+export { GameModel, Game, GameResult, Move, validateGame as validate };
