@@ -1,11 +1,11 @@
-const { User } = require('../models/user');
+import { UserModel } from '../models/user';
+import { Game, GameResult, Move } from "../models/game";
 
 // Provjera imamo li pobjednika (funkcija vraca X ako kreator igre pobjedjuje, odnosno O, ako drugi
 // igrac pobjedjuje)
 // Ovo ce na frontu biti prikazano dinamicki (nekad X, nekad O) kako bi korisnicima bilo zanimljivije
-async function checkForWinner(game) {
+async function checkForWinner(game: Game) {
   const outcome = calculateOutcome(game);
-
   switch (outcome) {
     case 'X':
       game.winnerId = game.creatorId;
@@ -18,34 +18,31 @@ async function checkForWinner(game) {
   }
 
   //Ako do sad nismo imali pobjednika, a potrosili smo sve poteze
-  if (game.winnerId === undefined && game.moves.length === 9) {
+  if (game.winnerId === undefined && game.moves?.length === 9) {
     game.winnerId = 'Draw';
-    return {
-      status: 200,
-      text: "No winner, it's a draw!",
-    };
+    console.log("No winner, it's a draw!");
+    const result = new GameResult("No winner, it's a draw!", 200);
+    result.winnerId = 'Draw';
+    return result;
   }
+
   //Ako je pobjednik upisan u prethodnoj switch statement, a nije remi
   else if (game.winnerId !== undefined && game.winnerId !== 'Draw') {
     const winner =
-      game.winnerId === 'PC'
+    game.winnerId === 'PC'
         ? 'PC'
-        : (await User.findById(game.winnerId)).nickname;
+        : (await UserModel.findById(game.winnerId))?.nickname;
     console.log(`...and the winner is ${winner}`);
-    return {
-      status: 200,
-      text: `...and the winner is ${winner}`,
-    };
+    const result = new GameResult(`...and the winner is ${winner}`, 200);
+    result.winnerId = 'PC';
+    return result;
   }
+
   //Ako nije ni remi ni pobjednik, znaci da potez nije odlucio pobjedu i igra nastavlja dalje
-  else
-    return {
-      status: 200,
-      text: 'Move played',
-    };
+  else return new GameResult('Move played', 200);
 }
 
-function pcMove(game) {
+function pcMove(game: Game) {
   const takenMoves = fillMatrix(game);
   let randomX, randomY;
   while (true) {
@@ -60,18 +57,17 @@ function pcMove(game) {
   };
 }
 
-function printMatrixToConsole(matrix) {
+function printMatrixToConsole(matrix: string[][]) {
   console.log('Current matrix');
   console.log(matrix[0]);
   console.log(matrix[1]);
   console.log(matrix[2]);
 }
 
-function calculateOutcome(game) {
+function calculateOutcome(game: Game) {
   const matrix = fillMatrix(game);
   printMatrixToConsole(matrix);
-
-  if (game.moves.length < 5) return 'Not done yet';
+  if (game.moves?.length! < 5) return 'Not done yet';
 
   //Glavna dijagonala
   if (
@@ -113,18 +109,17 @@ function calculateOutcome(game) {
   return 'N';
 }
 
-function fillMatrix(game) {
+function fillMatrix(game: Game) {
   const matrix = [
     ['', '', ''],
     ['', '', ''],
     ['', '', ''],
   ];
-  game.moves.forEach((move) => {
+  game.moves?.forEach((move:Move) => {
     matrix[move.xCoord][move.yCoord] =
       move.playerId === game.creatorId ? 'X' : 'O';
   });
   return matrix;
 }
 
-exports.checkForWinner = checkForWinner;
-exports.pcMove = pcMove;
+export { pcMove, checkForWinner, calculateOutcome };

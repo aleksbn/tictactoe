@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const express = require('express');
-const config = require('config');
+import mongoose from 'mongoose';
+import express from 'express';
+import config from 'config';
 const app = express();
 
-const users = require('./routes/users');
-const auth = require('./routes/auth');
-const games = require('./routes/games');
+import users from './routes/users';
+import auth from './routes/auth';
+import games from './routes/games';
 
 app.use(express.json());
 app.use('/api/users', users);
