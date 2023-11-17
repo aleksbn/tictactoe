@@ -1,5 +1,7 @@
 import { UserModel } from '../models/user';
 import { Game, GameResult, Move } from "../models/game";
+import UserDTO from '../models/DTOs/user-dto';
+import HistoryItem from '../models/historyItem';
 
 // Provjera imamo li pobjednika (funkcija vraca X ako kreator igre pobjedjuje, odnosno O, ako drugi
 // igrac pobjedjuje)
@@ -122,4 +124,22 @@ function fillMatrix(game: Game) {
   return matrix;
 }
 
-export { pcMove, checkForWinner, calculateOutcome };
+async function createSingleGameHistory(game: any): Promise<HistoryItem> {
+  const winner = game.winnerId;
+  const player1 = new UserDTO(
+    game.creatorId,
+    (await UserModel.findById(game.creatorId))?.nickname ?? ''
+    );
+  const player2 = new UserDTO('', '');
+  if (game.winnerId === 'PC') {
+    player2.id = 'PC';
+    player2.nickname = 'PC';
+  } else {
+    player2.id = game.opponentId;
+    player2.nickname =
+      (await UserModel.findById(game.opponentId))?.nickname ?? '';
+  }
+  return new HistoryItem(game._id, player1, player2, winner, game.moves);
+}
+
+export { pcMove, checkForWinner, calculateOutcome, createSingleGameHistory };
