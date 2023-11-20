@@ -13,6 +13,7 @@ router.post('/create/', auth, async (req: any, res) => {
     creatorId: req.user._id,
     isAgainstPC: req.body.isAgainstPC,
   });
+  if (game.isAgainstPC) game.opponentId = 'PC';
   await game.save();
 
   res.send(game._id);
@@ -129,7 +130,7 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
   // Ukoliko je u pitanju PC, a korisnik jos nije pobijedio, odigraj odmah i njegov potez i
   // provjeri pobjednika
   if (game.isAgainstPC && game.moves.length < 9) {
-    game.moves.push(pcMove(game));
+    game.moves.push(pcMove(game, 'PC'));
     result = await checkForWinner(game);
   }
 

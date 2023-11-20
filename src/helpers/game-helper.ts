@@ -6,7 +6,7 @@ import HistoryItem from '../models/historyItem';
 // Provjera imamo li pobjednika (funkcija vraca X ako kreator igre pobjedjuje, odnosno O, ako drugi
 // igrac pobjedjuje)
 // Ovo ce na frontu biti prikazano dinamicki (nekad X, nekad O) kako bi korisnicima bilo zanimljivije
-async function checkForWinner(game: Game) {
+async function checkForWinner(game: any) {
   const outcome = calculateOutcome(game);
   switch (outcome) {
     case 'X':
@@ -44,7 +44,7 @@ async function checkForWinner(game: Game) {
   else return new GameResult('Move played', 200);
 }
 
-function pcMove(game: Game) {
+function pcMove(game: any, playerId: string) {
   const takenMoves = fillMatrix(game);
   let randomX, randomY;
   while (true) {
@@ -53,7 +53,7 @@ function pcMove(game: Game) {
     if (takenMoves[randomX][randomY] === '') break;
   }
   return {
-    playerId: 'PC',
+    playerId: playerId,
     xCoord: randomX,
     yCoord: randomY,
   };
@@ -131,7 +131,7 @@ async function createSingleGameHistory(game: any): Promise<HistoryItem> {
     (await UserModel.findById(game.creatorId))?.nickname ?? ''
     );
   const player2 = new UserDTO('', '');
-  if (game.winnerId === 'PC') {
+  if (game.opponentId === 'PC') {
     player2.id = 'PC';
     player2.nickname = 'PC';
   } else {
