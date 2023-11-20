@@ -7,12 +7,14 @@ import users from './routes/users';
 import auth from './routes/auth';
 import games from './routes/games';
 import history from './routes/history';
+import generate from "./routes/generate";
 
 app.use(express.json());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/games', games);
 app.use('/api/history', history);
+app.use('/api/generate', generate);
 
 if(!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwt private key is not defined');
