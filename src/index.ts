@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import config from 'config';
+import cors from 'cors';
 const app = express();
 
 import users from './routes/users';
@@ -10,6 +11,7 @@ import history from './routes/history';
 import generate from "./routes/generate";
 
 app.use(express.json());
+app.use(cors());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/games', games);
