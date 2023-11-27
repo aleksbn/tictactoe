@@ -3,6 +3,40 @@ import { UserModel, validate } from '../models/user';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
 const router = express.Router();
+import auth from '../middleware/auth';
+import jwt from 'jsonwebtoken';
+import config from 'config';
+
+router.get('/', auth, async (req, res) => {
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+  let currentUser = await UserModel.findById(
+    jwt.verify(token, config.get('jwtPrivateKey'))
+  );
+  res.send(currentUser);
+});
+
+router.put('/', auth, async (req, res) => {
+  const id = req.body._id;
+  delete req.body._id;
+  const { error } = validate(req.body);
+  if (error) res.status(400).send(error.details[0].message);
+  const editUser = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  editUser.password = await bcrypt.hash(editUser.password, salt);
+  const user = await UserModel.findByIdAndUpdate(id, {
+    email: editUser.email,
+    password: editUser.password,
+    nickname: editUser.nickname,
+  });
+  //@ts-ignore
+  const token = user.generateAuthToken();
+  res
+    .header('x-auth-token', token)
+    .header('access-control-expose-headers', 'x-auth-token')
+    .send(_.pick(user, ['_id', 'nickname', 'email']));
+});
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
@@ -21,6 +55,7 @@ router.post('/', async (req, res) => {
   await user.save();
   res
     .header('x-auth-token', token)
+    .header('access-control-expose-headers', 'x-auth-token')
     .send(_.pick(user, ['_id', 'nickname', 'email']));
 });
 
