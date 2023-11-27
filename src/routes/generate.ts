@@ -31,14 +31,16 @@ router.get('/games/:number', async (req, res) => {
 router.get('/moves', async(req, res) => {
   const allGames = await GameModel.find();
   for(const game of allGames) {
-    game.opponentId = game.isAgainstPC ? 'PC' : game.opponentId;
-    let firstMove = !!(Math.floor(Math.random() * 2)); // true if player 1 plays first
-    while(!game.winnerId) {
-      let nextPlayer: any = firstMove ? game.creatorId : game.opponentId;
-      game.moves.push(pcMove(game, nextPlayer));
-      await checkForWinner(game);
-      await game.save();
-      firstMove = !firstMove;
+    if(game.winnerId !== undefined && game.moves.length === 0) {
+      game.opponentId = game.isAgainstPC ? 'PC' : game.opponentId;
+      let firstMove = !!(Math.floor(Math.random() * 2)); // true if player 1 plays first
+      while(!game.winnerId) {
+        let nextPlayer: any = firstMove ? game.creatorId : game.opponentId;
+        game.moves.push(pcMove(game, nextPlayer));
+        await checkForWinner(game);
+        await game.save();
+        firstMove = !firstMove;
+      }
     }
   }
   res.status(200).send('Games are populated with results.');

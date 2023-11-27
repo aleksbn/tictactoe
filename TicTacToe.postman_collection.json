@@ -274,7 +274,7 @@
 				"header": [
 					{
 						"key": "x-auth-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NmZmYzcwOTNiY2ZlMDc3ZTY3MmQiLCJpYXQiOjE3MDAyMjc4NDB9.3wG1I5lkwjU0swd2rR0m_cXCRTGd6eCJV_9PNHeUv7I",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NzAxZDcwOTNiY2ZlMDc3ZTY3MzMiLCJpYXQiOjE3MDA0NjcwODR9.zvAPn3aDJugM15t6cbuCioctkYpC5QevoXx0V4KHtig",
 						"type": "text"
 					}
 				],
@@ -288,7 +288,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/history/",
+					"raw": "http://localhost:3000/api/history/655b09b4cc6bed9cf05c6a1c",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -297,7 +297,50 @@
 					"path": [
 						"api",
 						"history",
-						""
+						"655b09b4cc6bed9cf05c6a1c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate random games",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/generate/games/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"generate",
+						"games",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate random moves for all games",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/generate/moves",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"generate",
+						"moves"
 					]
 				}
 			},
