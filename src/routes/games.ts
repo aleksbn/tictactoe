@@ -33,6 +33,12 @@ router.get('/join/:id', auth, async (req: any, res) => {
       .send('That game does not exist. Try creating one instead!');
   }
 
+  if (!game) {
+    return res
+      .status(404)
+      .send('That game does not exist. Try creating one instead!');
+  }
+
   // Ako je igra vec zavrsena od ranije i ima pobjednika
   if (game.winnerId !== undefined)
     return res
@@ -65,11 +71,7 @@ router.get('/join/:id', auth, async (req: any, res) => {
     await game.save();
   }
 
-  return res
-    .status(200)
-    .send(
-      "You successfully joined the game. When UI gets done, you'll be able to play the game."
-    );
+  return res.status(200).send(game);
 });
 
 router.post('/makeamove/:id', auth, async (req: any, res) => {
