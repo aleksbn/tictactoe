@@ -16,6 +16,13 @@ router.get('/', auth, async (req, res) => {
   res.send(currentUser);
 });
 
+router.get('/:id', async (req, res) => {
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+  let user = await UserModel.findById(req.params.id);
+  res.send(user?.nickname || 'unknown');
+});
+
 router.put('/', auth, async (req, res) => {
   const id = req.body._id;
   delete req.body._id;
