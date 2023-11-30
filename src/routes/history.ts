@@ -19,6 +19,12 @@ router.get('/:id', auth, async (req: any, res) => {
       .send('That game does not exist. Try creating one instead!');
   }
 
+  if (!game) {
+    return res
+      .status(404)
+      .send('That game does not exist. Try creating one instead!');
+  }
+
   //Ako igra jos nije gotova
   if (game.winnerId === undefined) {
     return res

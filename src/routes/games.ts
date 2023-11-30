@@ -33,13 +33,21 @@ router.get('/join/:id', auth, async (req: any, res) => {
       .send('That game does not exist. Try creating one instead!');
   }
 
+  if (!game) {
+    return res
+      .status(404)
+      .send('That game does not exist. Try creating one instead!');
+  }
+
   // Ako je igra vec zavrsena od ranije i ima pobjednika
   if (game.winnerId !== undefined)
+  {
     return res
-      .status(403)
-      .send(
-        'That game has already been played. Try creating or joining another one!'
+    .status(401)
+    .send(
+      'That game has already been played. Try creating or joining another one!'
       );
+    }
 
   // Ako je igra protiv PC-ja, a nije kreirana od strane tog korisnika koji se join-uje
   if (game.isAgainstPC && game.creatorId !== req.user._id)
@@ -65,11 +73,7 @@ router.get('/join/:id', auth, async (req: any, res) => {
     await game.save();
   }
 
-  return res
-    .status(200)
-    .send(
-      "You successfully joined the game. When UI gets done, you'll be able to play the game."
-    );
+  return res.status(200).send(game);
 });
 
 router.post('/makeamove/:id', auth, async (req: any, res) => {
@@ -78,6 +82,12 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
   try {
     game = await GameModel.findById(req.params.id);
   } catch (ex) {
+    return res
+      .status(404)
+      .send('That game does not exist. Try creating one instead!');
+  }
+
+  if (!game) {
     return res
       .status(404)
       .send('That game does not exist. Try creating one instead!');
@@ -136,7 +146,7 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
 
   // Sacuvaj promjene u bazi i vrati rezultat na front
   await game.save();
-  return res.status(result.status).send(result.statusText);
+  return res.status(result.status).send(game);
 });
 
 export default router;

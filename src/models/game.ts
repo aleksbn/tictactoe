@@ -102,7 +102,6 @@ function validateGame(game: Game) {
     creatorId: Joi.string().required(),
     isAgainstPC: Joi.boolean(),
   });
-  console.log(schema.validate(game));
   return schema.validate(game);
 }
 
