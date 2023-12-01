@@ -1,9 +1,6 @@
 import { GameModel } from '../models/game';
 import auth from '../middleware/auth';
 import express from 'express';
-import HistoryItem from '../models/historyItem';
-import UserDTO from '../models/DTOs/user-dto';
-import { UserModel } from '../models/user';
 import { createSingleGameHistory } from '../helpers/game-helper';
 
 const router = express.Router();

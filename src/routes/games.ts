@@ -1,6 +1,7 @@
 import auth from '../middleware/auth';
 import _ from 'lodash';
-import { Game, GameModel, Move, validate } from '../models/game';
+import { Game, GameModel, validate } from '../models/game';
+import { Move } from '../models/move';
 import express from 'express';
 import { checkForWinner, pcMove } from '../helpers/game-helper';
 const router = express.Router();
@@ -17,6 +18,21 @@ router.post('/create/', auth, async (req: any, res) => {
   await game.save();
 
   res.send(game._id);
+});
+
+router.get('/:id', auth, async (req: any, res) => {
+  let game: any;
+  try {
+    game = await GameModel.findById(req.params.id);
+  } catch (ex) {
+    return res.status(404).send('That game does not exist.');
+  }
+
+  if (!game) {
+    return res.status(404).send('That game does not exist.');
+  }
+
+  res.status(200).send(game);
 });
 
 // Igri se mozemo pridruziti u sljedecim slucajevima:
@@ -40,14 +56,13 @@ router.get('/join/:id', auth, async (req: any, res) => {
   }
 
   // Ako je igra vec zavrsena od ranije i ima pobjednika
-  if (game.winnerId !== undefined)
-  {
+  if (game.winnerId !== undefined) {
     return res
-    .status(401)
-    .send(
-      'That game has already been played. Try creating or joining another one!'
+      .status(401)
+      .send(
+        'That game has already been played. Try creating or joining another one!'
       );
-    }
+  }
 
   // Ako je igra protiv PC-ja, a nije kreirana od strane tog korisnika koji se join-uje
   if (game.isAgainstPC && game.creatorId !== req.user._id)
@@ -116,7 +131,7 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
     game.moves[game.moves.length - 1].playerId === req.user._id
   )
     return res
-      .status(403)
+      .status(405)
       .send("It's not your turn! Wait for the other player to make a move.");
 
   // Ako je taj potez ranije odigran, prekini izvrsavanje
@@ -128,8 +143,8 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
     })
   )
     return res
-      .status(403)
-      .send('That move has already been selected. Choose another one.');
+      .status(400)
+      .send('That move has already been played. Choose another one.');
 
   // Ako je sve u redu, dodaj potez u objekat
   game.moves.push(move);
@@ -139,7 +154,7 @@ router.post('/makeamove/:id', auth, async (req: any, res) => {
 
   // Ukoliko je u pitanju PC, a korisnik jos nije pobijedio, odigraj odmah i njegov potez i
   // provjeri pobjednika
-  if (game.isAgainstPC && game.moves.length < 9) {
+  if (game.isAgainstPC && game.moves.length < 9 && !game.winnerId) {
     game.moves.push(pcMove(game, 'PC'));
     result = await checkForWinner(game);
   }

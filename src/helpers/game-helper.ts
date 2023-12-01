@@ -1,5 +1,7 @@
 import { UserModel } from '../models/user';
-import { Game, GameResult, Move } from "../models/game";
+import { Game } from "../models/game";
+import { Move } from '../models/move';
+import { GameResultDTO } from '../models/DTOs/gameResultDTO';
 import UserDTO from '../models/DTOs/user-dto';
 import HistoryItem from '../models/historyItem';
 
@@ -22,8 +24,7 @@ async function checkForWinner(game: any) {
   //Ako do sad nismo imali pobjednika, a potrosili smo sve poteze
   if (game.winnerId === undefined && game.moves?.length === 9) {
     game.winnerId = 'Draw';
-    console.log("No winner, it's a draw!");
-    const result = new GameResult("No winner, it's a draw!", 200);
+    const result = new GameResultDTO("No winner, it's a draw!", 200);
     result.winnerId = 'Draw';
     return result;
   }
@@ -34,14 +35,13 @@ async function checkForWinner(game: any) {
     game.winnerId === 'PC'
         ? 'PC'
         : (await UserModel.findById(game.winnerId))?.nickname;
-    console.log(`...and the winner is ${winner}`);
-    const result = new GameResult(`...and the winner is ${winner}`, 200);
+    const result = new GameResultDTO(`...and the winner is ${winner}`, 200);
     result.winnerId = 'PC';
     return result;
   }
 
   //Ako nije ni remi ni pobjednik, znaci da potez nije odlucio pobjedu i igra nastavlja dalje
-  else return new GameResult('Move played', 200);
+  else return new GameResultDTO('Move played', 200);
 }
 
 function pcMove(game: any, playerId: string) {
