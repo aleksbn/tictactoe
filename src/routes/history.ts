@@ -1,10 +1,7 @@
 import { GameModel } from '../models/game';
 import auth from '../middleware/auth';
 import express from 'express';
-import HistoryItem from '../models/historyItem';
-import UserDTO from '../models/DTOs/user-dto';
-import { UserModel } from '../models/user';
-import { createSingleGameHistory } from '../helpers/game-helper';
+import { createOneGameHistory } from '../helpers/game-helper';
 
 const router = express.Router();
 
@@ -44,7 +41,7 @@ router.get('/:id', auth, async (req: any, res) => {
   }
 
   //Generisanje jedne istorije igranja
-  const historyItem = await createSingleGameHistory(game);
+  const historyItem = await createOneGameHistory(game);
 
   res.status(200).send(historyItem);
 });
@@ -63,10 +60,9 @@ router.get('/', auth, async (req: any, res) => {
       ],
     });
 
-    const historyArray = await Promise.all(games.map(
-      async (game) =>
-        (await createSingleGameHistory(game))
-    ));
+    const historyArray = await Promise.all(
+      games.map(async (game) => await createOneGameHistory(game))
+    );
     res.status(200).send(historyArray);
   } catch (ex) {
     res.status(404).send("You don't have any games played.");

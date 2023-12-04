@@ -1,6 +1,8 @@
 import { UserModel } from '../models/user';
-import { Game, GameResult, Move } from "../models/game";
-import UserDTO from '../models/DTOs/user-dto';
+import { Game } from '../models/game';
+import { Move } from '../models/move';
+import { GameResultDTO } from '../models/DTOs/gameResultDTO';
+import UserDTO from '../models/DTOs/userDTO';
 import HistoryItem from '../models/historyItem';
 
 // Provjera imamo li pobjednika (funkcija vraca X ako kreator igre pobjedjuje, odnosno O, ako drugi
@@ -22,8 +24,7 @@ async function checkForWinner(game: any) {
   //Ako do sad nismo imali pobjednika, a potrosili smo sve poteze
   if (game.winnerId === undefined && game.moves?.length === 9) {
     game.winnerId = 'Draw';
-    console.log("No winner, it's a draw!");
-    const result = new GameResult("No winner, it's a draw!", 200);
+    const result = new GameResultDTO("No winner, it's a draw!", 200);
     result.winnerId = 'Draw';
     return result;
   }
@@ -31,17 +32,16 @@ async function checkForWinner(game: any) {
   //Ako je pobjednik upisan u prethodnoj switch statement, a nije remi
   else if (game.winnerId !== undefined && game.winnerId !== 'Draw') {
     const winner =
-    game.winnerId === 'PC'
+      game.winnerId === 'PC'
         ? 'PC'
         : (await UserModel.findById(game.winnerId))?.nickname;
-    console.log(`...and the winner is ${winner}`);
-    const result = new GameResult(`...and the winner is ${winner}`, 200);
+    const result = new GameResultDTO(`...and the winner is ${winner}`, 200);
     result.winnerId = 'PC';
     return result;
   }
 
   //Ako nije ni remi ni pobjednik, znaci da potez nije odlucio pobjedu i igra nastavlja dalje
-  else return new GameResult('Move played', 200);
+  else return new GameResultDTO('Move played', 200);
 }
 
 function pcMove(game: any, playerId: string) {
@@ -117,19 +117,19 @@ function fillMatrix(game: Game) {
     ['', '', ''],
     ['', '', ''],
   ];
-  game.moves?.forEach((move:Move) => {
+  game.moves?.forEach((move: Move) => {
     matrix[move.xCoord][move.yCoord] =
       move.playerId === game.creatorId ? 'X' : 'O';
   });
   return matrix;
 }
 
-async function createSingleGameHistory(game: any): Promise<HistoryItem> {
+async function createOneGameHistory(game: any): Promise<HistoryItem> {
   const winner = game.winnerId;
   const player1 = new UserDTO(
     game.creatorId,
     (await UserModel.findById(game.creatorId))?.nickname ?? ''
-    );
+  );
   const player2 = new UserDTO('', '');
   if (game.opponentId === 'PC') {
     player2.id = 'PC';
@@ -142,4 +142,4 @@ async function createSingleGameHistory(game: any): Promise<HistoryItem> {
   return new HistoryItem(game._id, player1, player2, winner, game.moves);
 }
 
-export { pcMove, checkForWinner, calculateOutcome, createSingleGameHistory };
+export { pcMove, checkForWinner, calculateOutcome, createOneGameHistory };

@@ -1,6 +1,5 @@
-import { User, UserModel } from './user';
-import { GameModel, Game, Move } from './game';
-import UserDTO from './DTOs/user-dto';
+import { Move } from './move';
+import UserDTO from './DTOs/userDTO';
 
 interface IHistoryItem {
   gameId: string;

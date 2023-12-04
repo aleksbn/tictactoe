@@ -52,7 +52,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('move', (data) => {
-    console.log(data.winnerId);
     if (data.winnerId) {
       io.to(data._id).emit('gamefinished', data);
     } else io.to(data._id).emit('next', data);

@@ -1,11 +1,6 @@
 import Joi from 'joi';
 import mongoose from 'mongoose';
-
-interface IMove {
-  playerId: string;
-  xCoord: number;
-  yCoord: number;
-}
+import { Move } from './move';
 
 interface IGame {
   creatorId: string;
@@ -13,35 +8,6 @@ interface IGame {
   opponentId?: string;
   winnerId?: string;
   moves?: Move[];
-}
-
-interface IGameResult {
-  winnerId?: string;
-  statusText: string;
-  status: number;
-}
-
-class Move implements IMove {
-  playerId: string;
-  xCoord: number;
-  yCoord: number;
-
-  constructor(playerId: string, xCoord: number, yCoord: number) {
-    this.playerId = playerId;
-    this.xCoord = xCoord;
-    this.yCoord = yCoord;
-  }
-}
-
-class GameResult implements IGameResult {
-  winnerId?: string | undefined;
-  statusText: string;
-  status: number;
-
-  constructor(statusText: string, status: number) {
-    this.statusText = statusText;
-    this.status = status;
-  }
 }
 
 class Game implements IGame {
@@ -105,4 +71,4 @@ function validateGame(game: Game) {
   return schema.validate(game);
 }
 
-export { GameModel, Game, GameResult, Move, validateGame as validate };
+export { GameModel, Game, validateGame as validate };
