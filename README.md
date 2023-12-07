@@ -7,9 +7,9 @@ In order to run the project locally, you need to install node.js on your machine
 
 Node.js is basically a javascript engine very similar to the regular browser one you're using every time you use your web browser. The difference is it has many more functionalities that are not tied to regular browser, but are made for backend part of the app.
 
-You also need mongodb as a backend database provider. Head to the [mongodb](https://www.mongodb.com/atlas), download atlas and install it on your machine. It should already have the required address in order to create database at the start.
+You also need mongodb as a backend database provider. Head to the [mongodb](https://www.mongodb.com/atlas), download atlas (be sure to select complete installation if you want to be able to use compass - graphic UI for mongo dbs) and install it on your machine. It should already have the required address in order to create database at the start.
 
-# Backend start
+# Backend download
 Next, download the code provided in this project, copy it to the location you would like it to be stationed and open up your console.
 Go to the folder you copied the project to. In case you need to go a folder up, type:
 ```
@@ -26,20 +26,24 @@ d:
 in order to change path to disk D.
 
 # Installing libraries
-By default, most of the projects on github are stored without node_modules folder that consists of many required libraries in order to run the project. In order to download them, type in
+By default, most of the projects on github are stored without node_modules folder that consists of many required libraries in order to run the project. In order to download them, once you're in selected location in your command window, type in
 ```
 npm install
 ```
-You should repeat the process of libraries installation for frontend part too.
+And that's it, the required libraries are downloaded.
 # Running the app
-Simple, just type in 
+Before starting the backend, you need mongodb to be running. Open up new console (location is irrelevant) and type in
+```
+mongod
+```
+That's it. Now, head back to the console window where you started libraries installation and type in 
 ```
 npm start
 ```
 and voila! The app is running on address [http://localhost:3900/](http://localhost:3900/)
 
 # Frontend start, install and running the app
-Head to the [https://github.com/aleksbn/tictactoe-react](https://github.com/aleksbn/tictactoe-react) and download the frontend app. The steps are pretty much the same as with backend, and there's no major differences.
+Head to the [https://github.com/aleksbn/tictactoe-react](https://github.com/aleksbn/tictactoe-react) and download the frontend app. Repeat the stepps of downloading cude, isntalling libraries and starting the app. Of course, mongodb is already started and there's no need for doing it again.
 
 # Architecture considerations
 Project is using 3 layers:
