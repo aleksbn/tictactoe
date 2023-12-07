@@ -47,6 +47,8 @@ Project is using 3 layers:
 2. Node.js (backend)
 3. React (frontend)
 
+Game is using JWT token as a form of authentication. It has auth middleware that controlls every access to the backend endpoints. Typescript is making sure that all the data are strongly typed and sockets are providing the players with live communication. Endpoints access is supported by router created by the Express library.
+
 # Node.js backend libraries
 List of used libraries is following:
 1. bcrypt v5.1.1 for hashing passwords
