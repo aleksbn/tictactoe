@@ -43,7 +43,7 @@ npm start
 and voila! The app is running on address [http://localhost:3900/](http://localhost:3900/)
 
 # Frontend start, install and running the app
-Head to the [https://github.com/aleksbn/tictactoe-react](https://github.com/aleksbn/tictactoe-react) and download the frontend app. Repeat the stepps of downloading cude, isntalling libraries and starting the app. Of course, mongodb is already started and there's no need for doing it again.
+Head to the [https://github.com/aleksbn/tictactoe-react](https://github.com/aleksbn/tictactoe-react) and download the frontend app. Repeat the stepps of downloading code, isntalling libraries and starting the app. Of course, mongodb is already started and there's no need for doing it again.
 
 # Architecture considerations
 Project is using 3 layers:
