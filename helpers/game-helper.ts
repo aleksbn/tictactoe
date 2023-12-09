@@ -45,18 +45,94 @@ async function checkForWinner(game: any) {
 }
 
 function pcMove(game: any, playerId: string) {
-  const takenMoves = fillMatrix(game);
-  let randomX, randomY;
-  while (true) {
-    randomX = Math.floor(Math.random() * 3);
-    randomY = Math.floor(Math.random() * 3);
-    if (takenMoves[randomX][randomY] === '') break;
+  const matrix = fillMatrix(game);
+  const availableMoves = getAvailableMoves(matrix);
+
+  // Provjeri moze li PC da zavrsi
+  for (const move of availableMoves) {
+    const testMatrix = cloneMatrix(matrix);
+    testMatrix[move.xCoord][move.yCoord] = 'O';
+
+    if (isWinningMove(testMatrix, 'O')) {
+      return {
+        playerId: playerId,
+        xCoord: move.xCoord,
+        yCoord: move.yCoord,
+      };
+    }
   }
+
+  // Provjeri moze li PC da blokira
+  for (const move of availableMoves) {
+    const testMatrix = cloneMatrix(matrix);
+    testMatrix[move.xCoord][move.yCoord] = 'X'; // Assume it's the player's move
+
+    if (isWinningMove(testMatrix, 'X')) {
+      return {
+        playerId: playerId,
+        xCoord: move.xCoord,
+        yCoord: move.yCoord,
+      };
+    }
+  }
+
+  // Generisi nasumicni potez
+  const randomMove = getRandomMove(availableMoves);
   return {
     playerId: playerId,
-    xCoord: randomX,
-    yCoord: randomY,
+    xCoord: randomMove.xCoord,
+    yCoord: randomMove.yCoord,
   };
+}
+
+function cloneMatrix(matrix: string[][]): string[][] {
+  return matrix.map((row) => row.slice());
+}
+
+function getRandomMove(moves: Move[]): Move {
+  const randomIndex = Math.floor(Math.random() * moves.length);
+  return moves[randomIndex];
+}
+
+function isWinningMove(matrix: string[][], symbol: string): boolean {
+  // Testiraj redove, kolone ili dijagonale imamo li pobjednicki potez
+  for (let i = 0; i < 3; i++) {
+    if (
+      (matrix[i][0] === symbol &&
+        matrix[i][1] === symbol &&
+        matrix[i][2] === symbol) ||
+      (matrix[0][i] === symbol &&
+        matrix[1][i] === symbol &&
+        matrix[2][i] === symbol)
+    ) {
+      return true;
+    }
+  }
+
+  if (
+    (matrix[0][0] === symbol &&
+      matrix[1][1] === symbol &&
+      matrix[2][2] === symbol) ||
+    (matrix[0][2] === symbol &&
+      matrix[1][1] === symbol &&
+      matrix[2][0] === symbol)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function getAvailableMoves(matrix: string[][]): any {
+  const availableMoves: any = [];
+  for (let x = 0; x < 3; x++) {
+    for (let y = 0; y < 3; y++) {
+      if (matrix[x][y] === '') {
+        availableMoves.push({ xCoord: x, yCoord: y });
+      }
+    }
+  }
+  return availableMoves;
 }
 
 function printMatrixToConsole(matrix: string[][]) {
