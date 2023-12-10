@@ -1,9 +1,9 @@
-import { UserModel } from '../models/user';
-import { Game } from '../models/game';
-import { Move } from '../models/move';
+import { UserModel } from '../models/entities/user';
+import { Game } from '../models/entities/game';
+import { Move } from '../models/entities/move';
 import { GameResultDTO } from '../models/DTOs/gameResultDTO';
 import UserDTO from '../models/DTOs/userDTO';
-import HistoryItem from '../models/historyItem';
+import HistoryItem from '../models/DTOs/historyItem';
 
 // Provjera imamo li pobjednika (funkcija vraca X ako kreator igre pobjedjuje, odnosno O, ako drugi
 // igrac pobjedjuje)

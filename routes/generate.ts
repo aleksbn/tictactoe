@@ -2,9 +2,9 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 import _ from 'lodash';
 import { checkForWinner, pcMove } from '../helpers/game-helper';
-import { GameModel } from '../models/game';
-import { UserModel } from '../models/user';
-import { names } from '../helpers/random.helpers';
+import { GameModel } from '../models/entities/game';
+import { UserModel } from '../models/entities/user';
+import { names } from '../helpers/random-helpers';
 const router = express.Router();
 
 router.get('/:players/:games', async (req, res) => {
