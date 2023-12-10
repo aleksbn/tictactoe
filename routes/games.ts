@@ -1,7 +1,7 @@
 import auth from '../middleware/auth';
 import _ from 'lodash';
-import { Game, GameModel, validate } from '../models/game';
-import { Move } from '../models/move';
+import { Game, GameModel, validate } from '../models/entities/game';
+import { Move } from '../models/entities/move';
 import express from 'express';
 import { checkForWinner, pcMove } from '../helpers/game-helper';
 const router = express.Router();
