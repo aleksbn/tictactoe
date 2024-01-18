@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "55f18f09-b763-4cac-9531-97b680557149",
+		"_postman_id": "319a4017-b221-4f24-81a6-e86aa72e1c73",
 		"name": "TicTacToe",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8890526"
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"milica@test.net\",\r\n    \"nickname\": \"milica\",\r\n    \"password\": \"milicasifra\"\r\n}",
+					"raw": "{\r\n    \"email\": \"zlatan@test.net\",\r\n    \"nickname\": \"zlatan\",\r\n    \"password\": \"zlatansifra\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,12 +21,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/users/",
+					"raw": "http://localhost:3000/api/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -51,12 +51,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/auth/",
+					"raw": "http://localhost:3000/api/auth/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"auth",
@@ -97,12 +97,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/games/create/",
+					"raw": "http://localhost:3000/api/games/create/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"games",
@@ -137,12 +137,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/games/join/655471827093bcfe077e6740",
+					"raw": "http://localhost:3000/api/games/join/655471827093bcfe077e6740",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"games",
@@ -174,12 +174,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/games/makeamove/655471727093bcfe077e673e",
+					"raw": "http://localhost:3000/api/games/makeamove/655471727093bcfe077e673e",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"games",
@@ -211,12 +211,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/games/makeamove/655471727093bcfe077e673e",
+					"raw": "http://localhost:3000/api/games/makeamove/655471727093bcfe077e673e",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"games",
@@ -248,12 +248,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/games/makeamove/655471467093bcfe077e6738",
+					"raw": "http://localhost:3000/api/games/makeamove/655471467093bcfe077e6738",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"games",
@@ -288,12 +288,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3900/api/history/655b09b4cc6bed9cf05c6a1c",
+					"raw": "http://localhost:3000/api/history/655b09b4cc6bed9cf05c6a1c",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"history",
@@ -309,17 +309,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3900/api/generate/games/3",
+					"raw": "http://localhost:3000/api/generate/games/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"generate",
 						"games",
-						"3"
+						"2"
 					]
 				}
 			},
@@ -331,12 +331,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3900/api/generate/moves",
+					"raw": "http://localhost:3000/api/generate/moves",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3900",
+					"port": "3000",
 					"path": [
 						"api",
 						"generate",
