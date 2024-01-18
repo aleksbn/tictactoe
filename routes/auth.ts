@@ -1,4 +1,4 @@
-import { UserModel } from '../models/user';
+import { UserModel } from '../models/entities/user';
 import _ from 'lodash';
 import express from 'express';
 import Joi from 'joi';

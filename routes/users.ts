@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserModel, validate } from '../models/user';
+import { UserModel, validate } from '../models/entities/user';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
 const router = express.Router();

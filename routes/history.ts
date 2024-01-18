@@ -1,4 +1,4 @@
-import { GameModel } from '../models/game';
+import { GameModel } from '../models/entities/game';
 import auth from '../middleware/auth';
 import express from 'express';
 import { createOneGameHistory } from '../helpers/game-helper';
