@@ -36,17 +36,17 @@ Before starting the backend, you need mongodb to be running. Open up new console
 ```
 mongod
 ```
-In case you get an error stating the following: "mongod' is not recognized as an internal or external command, operable program or batch file", it means you must add local variable to your operative system. Here's the [info](https://stackoverflow.com/questions/51224959/mongo-is-not-recognized-as-an-internal-or-external-command-operable-program-o) on how do you do it on windows 10. I'm sure other operative systems follow similar steps. And that's it. Now, head back to the console window where you started libraries installation and type in 
+In case you get an error stating the following: "'mongod' is not recognized as an internal or external command, operable program or batch file", it means you must add local variable to your operative system. Here's the [info](https://stackoverflow.com/questions/51224959/mongo-is-not-recognized-as-an-internal-or-external-command-operable-program-o) on how do you do it on windows 10. I'm sure other operative systems follow similar steps. And that's it. Now, head back to the console window where you started libraries installation and type in 
 ```
 npm start
 ```
 and voila! The app is running on address [http://localhost:3900/](http://localhost:3900/)
 
 # Frontend start, install and running the app
-Head to the [https://github.com/aleksbn/tictactoe-react](https://github.com/aleksbn/tictactoe-react) and download the frontend app. Repeat the stepps of downloading code, isntalling libraries and starting the app. Of course, mongodb is already started and there's no need for doing it again.
+Head to the [https://github.com/aleksbn/tictactoe-frontend-react](https://github.com/aleksbn/tictactoe-frontend-react) and download the frontend app. Repeat the steps from downloading code, isntalling libraries and starting the app. Of course, mongodb is already started and there's no need for doing it again.
 
 # Data seeding
-Now, if you want to generate some random data, you can use built-in function for that. Just open your postman to make a request, or go to your browser and type in the following address: http://localhost:3000/generate. At the end of the url, you need to add the number of players you want to generate, as well as the number of games per player. In example, if I want 5 players with 4 games per player, I would go (or make a request in postman) to http://localhost:3000/generate/5/4. If you're interested in using the data, just open mongodb compass, head to the tictactoe db and see user names you generated. Password for every player is nickname+"sifra". In example, for user alex, password is alexsifra.
+Now, if you want to generate some random data, you can use built-in function for that. Just open your postman to make a request, or go to your browser and type in the following address: http://localhost:3900/generate. At the end of the url, you need to add the number of players you want to generate, as well as the number of games per player. In example, if I want 5 players with 4 games per player, I would go (or make a request in postman) to http://localhost:3900/generate/5/4. If you're interested in using the data, just open mongodb compass, head to the tictactoe db and see user names you generated. Password for every player is nickname+"sifra". In example, for user alex, password is alexsifra.
 
 # Architecture considerations
 Project is using 3 layers:
