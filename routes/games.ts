@@ -132,14 +132,13 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 		return res.status(401).send("This game has already been finished.");
 
 	const move: Move = req.body;
-	move.playerId = req.user._id;
-
 	if (!game.moves) game.moves = [];
 
 	// Ako nije taj korisnik na redu (prvo igranje ne racunamo)
 	if (
 		game.moves.length !== 0 &&
-		game.moves[game.moves.length - 1].playerId === req.user._id
+		game.moves[game.moves.length - 1].playerId === req.user._id &&
+		move.playerId !== "PC"
 	)
 		return res
 			.status(405)
@@ -157,18 +156,15 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 			.status(400)
 			.send("That move has already been played. Choose another one.");
 
-	// Ako je sve u redu, dodaj potez u objekat
-	game.moves.push(move);
+	// Ako je sve u redu, provjeri da li je potez za PC-ja. Ako jeste, generisi potez. Ako nije, dodaj potez u igru
+	if (move.playerId === "PC") {
+		game.moves.push(pcMove(game, "PC"));
+	} else {
+		game.moves.push(move);
+	}
 
 	// Provjeri da li je korisnik pobijedio
 	let result = await checkForWinner(game);
-
-	// Ukoliko je u pitanju PC, a korisnik jos nije pobijedio, odigraj odmah i njegov potez i
-	// provjeri pobjednika
-	if (game.isAgainstPC && game.moves.length < 9 && !game.winnerId) {
-		game.moves.push(pcMove(game, "PC"));
-		result = await checkForWinner(game);
-	}
 
 	// Sacuvaj promjene u bazi i vrati rezultat na front
 	try {
