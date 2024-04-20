@@ -32,7 +32,7 @@ app.use("/api/generate", generate);
 io.on("connection", (socket) => {
 	console.log(`User just connected. User ID: ${socket.id}`);
 
-	socket.on("join", (data) => {
+	socket.on("join", (data: { _id: string; isAgainstPC: boolean }) => {
 		socket.join(data._id);
 		const room = io.sockets.adapter.rooms.get(data._id);
 		let numberOfMembers = room ? room.size : 0;
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
 		);
 	});
 
-	socket.on("leave", (gameId) => {
+	socket.on("leave", (gameId: string) => {
 		socket.leave(gameId);
 		io.to(gameId).emit("playerLeft", "left");
 	});

@@ -1,167 +1,186 @@
-import auth from '../middleware/auth';
-import _ from 'lodash';
-import { Game, GameModel, validate } from '../models/entities/game';
-import { Move } from '../models/entities/move';
-import express from 'express';
-import { checkForWinner, pcMove } from '../helpers/game-helper';
+import auth from "../middleware/auth";
+import _ from "lodash";
+import { Game } from "../models/entities/game";
+import { Move } from "../models/entities/move";
+import express, { Request, Response } from "express";
+import { checkForWinner, pcMove } from "../helpers/game-helper";
+import { Model } from "mongoose";
+import { validate as validateGame } from "../models/mongoose/gameModel";
+import { GameModel } from "../models/mongoose/gameModel";
 const router = express.Router();
 
-router.post('/create/', auth, async (req: any, res) => {
-  const { error } = validate(new Game(req.user._id, req.body.isAgainstPC));
-  if (error) return res.status(400).send(error.details[0].message);
+router.post("/create/", auth, async (req: any, res: Response) => {
+	const { error } = validateGame(new Game(req.user._id!, req.body.isAgainstPC));
+	if (error) return res.status(400).send(error.details[0].message);
 
-  let game = new GameModel({
-    creatorId: req.user._id,
-    isAgainstPC: req.body.isAgainstPC,
-  });
-  if (game.isAgainstPC) game.opponentId = 'PC';
-  await game.save();
+	let game = new GameModel({
+		creatorId: req.user._id,
+		isAgainstPC: req.body.isAgainstPC,
+	});
+	if (game.isAgainstPC) game.opponentId = "PC";
+	await game.save();
 
-  res.send(game._id);
+	res.send(game._id);
 });
 
-router.get('/:id', auth, async (req: any, res) => {
-  let game: any;
-  try {
-    game = await GameModel.findById(req.params.id);
-  } catch (ex) {
-    return res.status(404).send('That game does not exist.');
-  }
+router.get("/:id", auth, async (req: Request, res: Response) => {
+	let game: Model<Game> | null;
+	try {
+		game = await GameModel.findOne({ _id: req.params.id });
+	} catch (error: any) {
+		return res.status(404).send("That game does not exist.");
+	}
 
-  if (!game) {
-    return res.status(404).send('That game does not exist.');
-  }
+	if (!game) {
+		return res.status(404).send("That game does not exist.");
+	}
 
-  res.status(200).send(game);
+	res.status(200).send(game);
 });
 
 // Igri se mozemo pridruziti u sljedecim slucajevima:
 // 1. Ako smo kreirali igru
 // 2. Ako je slobodno mjesto drugog igraca, a igra nije oznacena kao single player
-router.get('/join/:id', auth, async (req: any, res) => {
-  // Pronalazimo igru na osnovu ID-ja iz params
-  let game: any;
-  try {
-    game = await GameModel.findById(req.params.id);
-  } catch (ex) {
-    return res
-      .status(404)
-      .send('That game does not exist. Try creating one instead!');
-  }
+router.get("/join/:id", auth, async (req: any, res: Response) => {
+	// Pronalazimo igru na osnovu ID-ja iz params
+	let game: Game | null;
+	try {
+		game = await GameModel.findById(req.params.id).lean();
+	} catch (ex) {
+		return res
+			.status(404)
+			.send("That game does not exist. Try creating one instead!");
+	}
 
-  if (!game) {
-    return res
-      .status(404)
-      .send('That game does not exist. Try creating one instead!');
-  }
+	if (!game) {
+		return res
+			.status(404)
+			.send("That game does not exist. Try creating one instead!");
+	}
 
-  // Ako je igra vec zavrsena od ranije i ima pobjednika
-  if (game.winnerId !== undefined) {
-    return res
-      .status(401)
-      .send(
-        'That game has already been played. Try creating or joining another one!'
-      );
-  }
+	// Ako je igra vec zavrsena od ranije i ima pobjednika
+	if (game.winnerId) {
+		return res
+			.status(401)
+			.send(
+				"That game has already been played. Try creating or joining another one!"
+			);
+	}
 
-  // Ako je igra protiv PC-ja, a nije kreirana od strane tog korisnika koji se join-uje
-  if (game.isAgainstPC && game.creatorId !== req.user._id)
-    return res
-      .status(403)
-      .send(
-        'This game has been marked as played against PC. You cannot join it.'
-      );
+	// Ako je igra protiv PC-ja, a nije kreirana od strane tog korisnika koji se join-uje
+	if (game.isAgainstPC && game.creatorId !== req.user._id)
+		return res
+			.status(403)
+			.send(
+				"This game has been marked as played against PC. You cannot join it."
+			);
 
-  // Ako igru nije kreirao korisnik, a neko drugi se vec prijavio kao protivnik
-  if (
-    game.creatorId !== req.user._id &&
-    game.opponentId !== undefined &&
-    game.opponentId !== req.user._id
-  )
-    return res
-      .status(403)
-      .send('That game already has two players. Try joining another one!');
+	// Ako igru nije kreirao korisnik, a neko drugi se vec prijavio kao protivnik
+	if (
+		game.creatorId !== req.user._id &&
+		game.opponentId !== undefined &&
+		game.opponentId !== req.user._id
+	)
+		return res
+			.status(403)
+			.send("That game already has two players. Try joining another one!");
 
-  // U suprotnom se mozemo prijaviti
-  if (game.creatorId !== req.user._id) {
-    game.opponentId = req.user._id;
-    await game.save();
-  }
+	// U suprotnom se mozemo prijaviti
+	if (game.creatorId !== req.user._id) {
+		game.opponentId = req.user._id;
+		try {
+			await GameModel.updateOne(
+				{ _id: req.params.id },
+				{ opponentId: req.user._id }
+			);
+		} catch (error: any) {
+			// Ako dodje do greske kod update-a
+			return res.status(500).send("Failed to update game data.");
+		}
+	}
 
-  return res.status(200).send(game);
+	return res.status(200).send(game);
 });
 
-router.post('/makeamove/:id', auth, async (req: any, res) => {
-  // Pronalazimo igru na osnovu ID-ja iz params
-  let game: any;
-  try {
-    game = await GameModel.findById(req.params.id);
-  } catch (ex) {
-    return res
-      .status(404)
-      .send('That game does not exist. Try creating one instead!');
-  }
+router.post("/makeamove/:id", auth, async (req: any, res) => {
+	// Pronalazimo igru na osnovu ID-ja iz params
+	let game: Game | null;
+	try {
+		game = await GameModel.findById(req.params.id).lean();
+	} catch (ex) {
+		return res
+			.status(404)
+			.send("That game does not exist. Try creating one instead!");
+	}
 
-  if (!game) {
-    return res
-      .status(404)
-      .send('That game does not exist. Try creating one instead!');
-  }
+	if (!game) {
+		return res
+			.status(404)
+			.send("That game does not exist. Try creating one instead!");
+	}
 
-  // Ako igrac nije dio igre
-  if (
-    game.creatorId !== req.user._id &&
-    game.opponentId !== undefined &&
-    game.opponentId !== req.user._id
-  )
-    return res.status(403).send("You're not a part of this game.");
+	// Ako igrac nije dio igre
+	if (game.creatorId !== req.user._id && game.opponentId !== req.user._id)
+		return res.status(403).send("You're not a part of this game.");
 
-  // Ukoliko je igra vec gotova i ima pobjednika
-  if (game.winnerId !== undefined)
-    return res.status(403).send('This game has already been finished.');
+	// Ako igra nema oba igraca
+	if (!game.opponentId)
+		return res.status(403).send("Game does not have both players yet.");
 
-  const move = req.body;
-  move.playerId = req.user._id;
+	// Ukoliko je igra vec gotova i ima pobjednika
+	if (game.winnerId)
+		return res.status(401).send("This game has already been finished.");
 
-  if (game.moves === undefined) game.moves = [];
+	const move: Move = req.body;
+	move.playerId = req.user._id;
 
-  // Ako nije taj korisnik na redu (prvo igranje ne racunamo - za sad)
-  if (
-    game.moves.length !== 0 &&
-    game.moves[game.moves.length - 1].playerId === req.user._id
-  )
-    return res
-      .status(405)
-      .send("It's not your turn! Wait for the other player to make a move.");
+	if (!game.moves) game.moves = [];
 
-  // Ako je taj potez ranije odigran, prekini izvrsavanje
-  if (
-    game.moves.some((moveFromDb: Move) => {
-      return (
-        moveFromDb.xCoord === +move.xCoord && moveFromDb.yCoord === +move.yCoord
-      );
-    })
-  )
-    return res
-      .status(400)
-      .send('That move has already been played. Choose another one.');
+	// Ako nije taj korisnik na redu (prvo igranje ne racunamo)
+	if (
+		game.moves.length !== 0 &&
+		game.moves[game.moves.length - 1].playerId === req.user._id
+	)
+		return res
+			.status(405)
+			.send("It's not your turn! Wait for the other player to make a move.");
 
-  // Ako je sve u redu, dodaj potez u objekat
-  game.moves.push(move);
+	// Ako je taj potez ranije odigran, prekini izvrsavanje
+	if (
+		game.moves.some((moveFromDb: Move) => {
+			return (
+				moveFromDb.xCoord === +move.xCoord && moveFromDb.yCoord === +move.yCoord
+			);
+		})
+	)
+		return res
+			.status(400)
+			.send("That move has already been played. Choose another one.");
 
-  // Provjeri da li je korisnik pobijedio
-  let result = await checkForWinner(game);
+	// Ako je sve u redu, dodaj potez u objekat
+	game.moves.push(move);
 
-  // Ukoliko je u pitanju PC, a korisnik jos nije pobijedio, odigraj odmah i njegov potez i
-  // provjeri pobjednika
-  if (game.isAgainstPC && game.moves.length < 9 && !game.winnerId) {
-    game.moves.push(pcMove(game, 'PC'));
-    result = await checkForWinner(game);
-  }
+	// Provjeri da li je korisnik pobijedio
+	let result = await checkForWinner(game);
 
-  // Sacuvaj promjene u bazi i vrati rezultat na front
-  await game.save();
-  return res.status(result.status).send(game);
+	// Ukoliko je u pitanju PC, a korisnik jos nije pobijedio, odigraj odmah i njegov potez i
+	// provjeri pobjednika
+	if (game.isAgainstPC && game.moves.length < 9 && !game.winnerId) {
+		game.moves.push(pcMove(game, "PC"));
+		result = await checkForWinner(game);
+	}
+
+	// Sacuvaj promjene u bazi i vrati rezultat na front
+	try {
+		await GameModel.updateOne(
+			{ _id: req.params.id },
+			{ moves: game.moves!, winnerId: game.winnerId ? game.winnerId : "" }
+		);
+	} catch (error: any) {
+		// Ako dodje do greske kod update-a
+		return res.status(500).send("Failed to update game data.");
+	}
+	return res.status(result.status).send(game);
 });
 
 export default router;
