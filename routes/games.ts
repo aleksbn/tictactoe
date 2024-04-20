@@ -158,25 +158,44 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 
 	// Ako je sve u redu, provjeri da li je potez za PC-ja. Ako jeste, generisi potez. Ako nije, dodaj potez u igru
 	if (move.playerId === "PC") {
-		game.moves.push(pcMove(game, "PC"));
+		setTimeout(async () => {
+			game!.moves!.push(pcMove(game!, "PC"));
+			// Provjeri da li je korisnik pobijedio
+			let result = await checkForWinner(game!);
+
+			// Sacuvaj promjene u bazi i vrati rezultat na front
+			try {
+				await GameModel.updateOne(
+					{ _id: req.params.id },
+					{
+						moves: game!.moves!,
+						winnerId: game!.winnerId ? game!.winnerId : "",
+					}
+				);
+			} catch (error: any) {
+				// Ako dodje do greske kod update-a
+				return res.status(500).send("Failed to update game data.");
+			}
+			return res.status(result.status).send(game);
+		}, 1000);
 	} else {
 		game.moves.push(move);
-	}
 
-	// Provjeri da li je korisnik pobijedio
-	let result = await checkForWinner(game);
+		// Provjeri da li je korisnik pobijedio
+		let result = await checkForWinner(game);
 
-	// Sacuvaj promjene u bazi i vrati rezultat na front
-	try {
-		await GameModel.updateOne(
-			{ _id: req.params.id },
-			{ moves: game.moves!, winnerId: game.winnerId ? game.winnerId : "" }
-		);
-	} catch (error: any) {
-		// Ako dodje do greske kod update-a
-		return res.status(500).send("Failed to update game data.");
+		// Sacuvaj promjene u bazi i vrati rezultat na front
+		try {
+			await GameModel.updateOne(
+				{ _id: req.params.id },
+				{ moves: game.moves!, winnerId: game.winnerId ? game.winnerId : "" }
+			);
+		} catch (error: any) {
+			// Ako dodje do greske kod update-a
+			return res.status(500).send("Failed to update game data.");
+		}
+		return res.status(result.status).send(game);
 	}
-	return res.status(result.status).send(game);
 });
 
 export default router;
