@@ -1,6 +1,0 @@
-{
-  level: 'warn',
-  message: 'Cast to ObjectId failed for value "662cd4bf5beee090ab01010f1" (type string) at path "_id" for model "Game"',
-  label: 'user-error',
-  timestamp: '2024-04-27T11:01:42.324Z'
-}
