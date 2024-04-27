@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "319a4017-b221-4f24-81a6-e86aa72e1c73",
+		"_postman_id": "55f18f09-b763-4cac-9531-97b680557149",
 		"name": "TicTacToe",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8890526"
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"zlatan@test.net\",\r\n    \"nickname\": \"zlatan\",\r\n    \"password\": \"zlatansifra\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"nickname\": \"\",\r\n    \"password\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,12 +21,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/",
+					"raw": "http://localhost:3900/api/users/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"users",
@@ -43,7 +43,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"mirko@test.net\",\r\n    \"password\": \"mirkosifra\"\r\n}",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -51,12 +51,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/auth/",
+					"raw": "http://localhost:3900/api/auth/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"auth",
@@ -74,7 +74,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE5NjJjYWQ2N2JmNGI3NWRiODFlZDYiLCJpYXQiOjE3MTI4MzI1Mjl9.GKyoxWh9Ivwa5EJNZEY_Ns5CpqK2W0qO7Zf8OQlDiS8",
 							"type": "string"
 						}
 					]
@@ -83,13 +83,13 @@
 				"header": [
 					{
 						"key": "x-auth-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NmZlNjcwOTNiY2ZlMDc3ZTY3MmEiLCJpYXQiOjE3MDAwMzMwMzN9.zB0aGNG0AciwXjFs24nRt7qASBDl92nrNiROJvO9Zd0",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE5NjJjYWQ2N2JmNGI3NWRiODFlZDYiLCJpYXQiOjE3MTMyNTgzMTN9.8jCJwR5rREZJHctrR4bkiOa6Iu1ELlyHoEPvJM0eAKQ",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"isAgainstPC\": \"false\"\r\n}",
+					"raw": "{\r\n    \"isAgainstPC\": \"true\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,12 +97,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/games/create/",
+					"raw": "http://localhost:3900/api/games/create/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"games",
@@ -123,7 +123,7 @@
 				"header": [
 					{
 						"key": "x-auth-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NzAzNzcwOTNiY2ZlMDc3ZTY3MzYiLCJpYXQiOjE3MDAyMDc2NDB9.MWKH-8__lPXFyQRxWJ6P4RfLghQLMyFP91WB4mhDtmY",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJjZDRiZjViZWVlMDkwYWIwMTAwZjAiLCJpYXQiOjE3MTQyMTQ3NDR9.n8PVQSE057D59aDr7GBGSaZyQiPQH7BvswvxJGYzBPo",
 						"type": "text"
 					}
 				],
@@ -137,17 +137,17 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/games/join/655471827093bcfe077e6740",
+					"raw": "http://localhost:3900/api/games/join/662cd4bf5beee090ab01010f",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"games",
 						"join",
-						"655471827093bcfe077e6740"
+						"662cd4bf5beee090ab01010f"
 					]
 				}
 			},
@@ -160,13 +160,13 @@
 				"header": [
 					{
 						"key": "x-auth-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU0NzAxZDcwOTNiY2ZlMDc3ZTY3MzMiLCJpYXQiOjE3MDAyMjc3NjB9.215RWByncNZkqAxsCAKyYrKVrAIYp3prqm_Vw2urLXY",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE5NjJjYWQ2N2JmNGI3NWRiODFlZDYiLCJpYXQiOjE3MTM0Njc1MjR9.eqQGTqw6qGoGGlgrFxtIaPuDESVthpgZO4RPZ6Kef98",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"xCoord\": \"2\",\r\n    \"yCoord\": \"1\"\r\n}",
+					"raw": "{\r\n    \"xCoord\": \"2\",\r\n    \"yCoord\": \"2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -174,17 +174,17 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/games/makeamove/655471727093bcfe077e673e",
+					"raw": "http://localhost:3900/api/games/makeamove/66210706118cab0e4f08c789",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"games",
 						"makeamove",
-						"655471727093bcfe077e673e"
+						"66210706118cab0e4f08c789"
 					]
 				}
 			},
@@ -211,12 +211,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/games/makeamove/655471727093bcfe077e673e",
+					"raw": "http://localhost:3900/api/games/makeamove/655471727093bcfe077e673e",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"games",
@@ -248,12 +248,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/games/makeamove/655471467093bcfe077e6738",
+					"raw": "http://localhost:3900/api/games/makeamove/655471467093bcfe077e6738",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"games",
@@ -288,59 +288,38 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/history/655b09b4cc6bed9cf05c6a1c",
+					"raw": "http://localhost:3900/api/history/65a96354d67bf4b75db81f06",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"history",
-						"655b09b4cc6bed9cf05c6a1c"
+						"65a96354d67bf4b75db81f06"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Generate random games",
+			"name": "Generate random data",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/generate/games/2",
+					"raw": "http://localhost:3900/api/generate/10/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3900",
 					"path": [
 						"api",
 						"generate",
-						"games",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Generate random moves for all games",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/generate/moves",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"generate",
-						"moves"
+						"10",
+						"4"
 					]
 				}
 			},
