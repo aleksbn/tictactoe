@@ -12,10 +12,7 @@ const router = express.Router();
 router.get("/", auth, async (req: Request, res: Response) => {
 	const token = req.header("x-auth-token");
 	if (!token) {
-		userDataLogger.log(
-			"warn",
-			"Illegal attempt of logging in. No token provided."
-		);
+		userDataLogger.warning("Illegal attempt of logging in. No token provided.");
 		return res.status(401).send("Access denied. No token provided.");
 	}
 	let currentUser = await UserModel.findById(
@@ -27,10 +24,7 @@ router.get("/", auth, async (req: Request, res: Response) => {
 router.get("/:id", async (req: Request, res: Response) => {
 	const token = req.header("x-auth-token");
 	if (!token) {
-		userDataLogger.log(
-			"warn",
-			"Illegal attempt of logging in. No token provided."
-		);
+		userDataLogger.warning("Illegal attempt of logging in. No token provided.");
 		return res.status(401).send("Access denied. No token provided.");
 	}
 	let user = await UserModel.findById(req.params.id);

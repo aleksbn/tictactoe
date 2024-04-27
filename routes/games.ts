@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/create/", auth, async (req: any, res: Response) => {
 	const { error } = validateGame(new Game(req.user._id!, req.body.isAgainstPC));
 	if (error) {
-		userDataLogger.log("warn", error.details[0].message);
+		userDataLogger.warning(error.details[0].message);
 		return res.status(400).send(error.details[0].message);
 	}
 
@@ -32,7 +32,7 @@ router.get("/:id", auth, async (req: Request, res: Response) => {
 	try {
 		game = await GameModel.findOne({ _id: req.params.id });
 	} catch (error: any) {
-		userDataLogger.log("warn", error.message);
+		userDataLogger.warning(error.message);
 		return res.status(404).send("Something went wrong in getting game data.");
 	}
 
@@ -48,7 +48,7 @@ router.get("/join/:id", auth, async (req: any, res: Response) => {
 	try {
 		game = await GameModel.findById(req.params.id).lean();
 	} catch (ex: any) {
-		userDataLogger.log("warn", ex.message);
+		userDataLogger.warning(ex.message);
 		return res
 			.status(404)
 			.send("That game does not exist. Try creating one instead!");
@@ -95,7 +95,7 @@ router.get("/join/:id", auth, async (req: any, res: Response) => {
 			);
 		} catch (error: any) {
 			// Ako dodje do greske kod update-a
-			userDataLogger.log("warn", error.message);
+			userDataLogger.warning(error.message);
 			return res.status(500).send("Failed to update game data.");
 		}
 	}
@@ -109,7 +109,7 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 	try {
 		game = await GameModel.findById(req.params.id).lean();
 	} catch (ex: any) {
-		userDataLogger.log("warn", ex.message);
+		userDataLogger.warning(ex.message);
 		return res
 			.status(404)
 			.send("That game does not exist. Try creating one instead!");
@@ -174,7 +174,7 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 				);
 			} catch (error: any) {
 				// Ako dodje do greske kod update-a
-				userDataLogger.log("warn", error.message);
+				userDataLogger.warning(error.message);
 				return res.status(500).send("Failed to update game data.");
 			}
 			return res.status(result.status).send(game);
@@ -193,7 +193,7 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 			);
 		} catch (error: any) {
 			// Ako dodje do greske kod update-a
-			userDataLogger.log("warn", error.message);
+			userDataLogger.warning(error.message);
 			return res.status(500).send("Failed to update game data.");
 		}
 		return res.status(result.status).send(game);
