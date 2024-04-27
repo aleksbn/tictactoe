@@ -1,0 +1,240 @@
+{
+  level: 'info',
+  message: 'Connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T11:48:36.169Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T11:49:11.787Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:53:30.078Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:54:18.974Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:54:59.806Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:55:08.264Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:55:38.281Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:56:00.570Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:56:34.951Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:57:08.831Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:57:47.955Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:58:06.680Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T12:58:15.283Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:00:34.893Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:01:05.605Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:01:21.948Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:01:32.605Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:01:37.874Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:02:10.943Z'
+}
+{
+  level: 'info',
+  message: 'Listening on port 3900...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:04:54.984Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:04:55.002Z'
+}
+{
+  level: 'info',
+  message: 'Listening on port 3900...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:05:08.382Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:05:08.401Z'
+}
+{
+  level: 'info',
+  message: 'Socket IO server is active. Listening on port 3900...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:06:00.387Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:06:00.404Z'
+}
+{
+  level: 'info',
+  message: 'Socket IO server is active. Listening on port 3900...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:13:25.058Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:13:25.078Z'
+}
+{
+  level: 'info',
+  message: 'Socket IO server is active. Listening on port 3900...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:13:46.689Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:13:46.707Z'
+}
+{
+  level: 'info',
+  message: 'Socket IO server is active. Listening on port 3900...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:14:05.455Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:14:05.473Z'
+}
+{
+  message: 'Socket IO server is active. Listening on port 3900...',
+  level: 'info',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:14:25.834Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:14:25.853Z'
+}
+{
+  message: 'Socket IO server is active. Listening on port 3900...',
+  level: 'info',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:15:53.981Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:15:53.999Z'
+}
+{
+  message: 'Socket IO server is active. Listening on port 3900...',
+  level: 'info',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:17:06.717Z'
+}
+{
+  level: 'info',
+  message: 'Application connected to MongoBD...',
+  label: 'server-log',
+  timestamp: '2024-04-27T13:17:06.734Z'
+}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"label":"server-log","timestamp":"2024-04-27T13:17:36.950Z"}
+[32minfo[39m: Application connected to MongoBD... {"label":"server-log","timestamp":"2024-04-27T13:17:36.968Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:18:00.713Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:18:00.733Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:18:47.281Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:18:47.303Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:18:54.969Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:18:54.987Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:20:09.474Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:20:09.493Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:20:39.538Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:20:39.556Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:22:13.148Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:22:13.166Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:22:21.183Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:22:21.200Z"}
+[32minfo[39m: Socket IO server is active. Listening on port 3900... {"timestamp":"2024-04-27T13:23:00.187Z"}
+[32minfo[39m: Application connected to MongoBD... {"timestamp":"2024-04-27T13:23:00.208Z"}

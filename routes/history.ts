@@ -17,7 +17,7 @@ router.get("/:id", auth, async (req: any, res: Response) => {
 	try {
 		game = await GameModel.findById(req.params.id).lean();
 	} catch (ex: any) {
-		userDataLogger.log("warn", ex.message);
+		userDataLogger.warning(ex.message);
 		return res
 			.status(404)
 			.send("That game does not exist. Try creating one instead!");
