@@ -3,6 +3,7 @@ import auth from "../middleware/auth";
 import express, { Response } from "express";
 import { createOneGameHistory } from "../helpers/game-helper";
 import { GameModel } from "../models/mongoose/gameModel";
+import { userDataLogger } from "../helpers/user-data-logger";
 
 const router = express.Router();
 
@@ -15,16 +16,15 @@ router.get("/:id", auth, async (req: any, res: Response) => {
 	let game: IFullGame | null;
 	try {
 		game = await GameModel.findById(req.params.id).lean();
-	} catch (ex) {
+	} catch (ex: any) {
+		userDataLogger.log("warn", ex.message);
 		return res
 			.status(404)
 			.send("That game does not exist. Try creating one instead!");
 	}
 
 	if (!game) {
-		return res
-			.status(404)
-			.send("That game does not exist. Try creating one instead!");
+		return;
 	}
 
 	//Ako igra jos nije gotova

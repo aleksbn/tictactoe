@@ -7,11 +7,15 @@ import { checkForWinner, pcMove } from "../helpers/game-helper";
 import { Model } from "mongoose";
 import { validate as validateGame } from "../models/mongoose/gameModel";
 import { GameModel } from "../models/mongoose/gameModel";
+import { userDataLogger } from "../helpers/user-data-logger";
 const router = express.Router();
 
 router.post("/create/", auth, async (req: any, res: Response) => {
 	const { error } = validateGame(new Game(req.user._id!, req.body.isAgainstPC));
-	if (error) return res.status(400).send(error.details[0].message);
+	if (error) {
+		userDataLogger.log("warn", error.details[0].message);
+		return res.status(400).send(error.details[0].message);
+	}
 
 	let game = new GameModel({
 		creatorId: req.user._id,
@@ -28,11 +32,8 @@ router.get("/:id", auth, async (req: Request, res: Response) => {
 	try {
 		game = await GameModel.findOne({ _id: req.params.id });
 	} catch (error: any) {
-		return res.status(404).send("That game does not exist.");
-	}
-
-	if (!game) {
-		return res.status(404).send("That game does not exist.");
+		userDataLogger.log("warn", error.message);
+		return res.status(404).send("Something went wrong in getting game data.");
 	}
 
 	res.status(200).send(game);
@@ -46,16 +47,15 @@ router.get("/join/:id", auth, async (req: any, res: Response) => {
 	let game: Game | null;
 	try {
 		game = await GameModel.findById(req.params.id).lean();
-	} catch (ex) {
+	} catch (ex: any) {
+		userDataLogger.log("warn", ex.message);
 		return res
 			.status(404)
 			.send("That game does not exist. Try creating one instead!");
 	}
 
 	if (!game) {
-		return res
-			.status(404)
-			.send("That game does not exist. Try creating one instead!");
+		return;
 	}
 
 	// Ako je igra vec zavrsena od ranije i ima pobjednika
@@ -95,6 +95,7 @@ router.get("/join/:id", auth, async (req: any, res: Response) => {
 			);
 		} catch (error: any) {
 			// Ako dodje do greske kod update-a
+			userDataLogger.log("warn", error.message);
 			return res.status(500).send("Failed to update game data.");
 		}
 	}
@@ -107,16 +108,15 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 	let game: Game | null;
 	try {
 		game = await GameModel.findById(req.params.id).lean();
-	} catch (ex) {
+	} catch (ex: any) {
+		userDataLogger.log("warn", ex.message);
 		return res
 			.status(404)
 			.send("That game does not exist. Try creating one instead!");
 	}
 
 	if (!game) {
-		return res
-			.status(404)
-			.send("That game does not exist. Try creating one instead!");
+		return;
 	}
 
 	// Ako igrac nije dio igre
@@ -174,6 +174,7 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 				);
 			} catch (error: any) {
 				// Ako dodje do greske kod update-a
+				userDataLogger.log("warn", error.message);
 				return res.status(500).send("Failed to update game data.");
 			}
 			return res.status(result.status).send(game);
@@ -192,6 +193,7 @@ router.post("/makeamove/:id", auth, async (req: any, res) => {
 			);
 		} catch (error: any) {
 			// Ako dodje do greske kod update-a
+			userDataLogger.log("warn", error.message);
 			return res.status(500).send("Failed to update game data.");
 		}
 		return res.status(result.status).send(game);

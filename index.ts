@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import express from "express";
+import express, { NextFunction } from "express";
 import http from "http";
 import { Server } from "socket.io";
 import config from "config";
@@ -10,6 +10,16 @@ import auth from "./routes/auth";
 import games from "./routes/games";
 import history from "./routes/history";
 import generate from "./routes/generate";
+import { serverLogger } from "./helpers/server-logger";
+import { IError } from "./models/common";
+
+process.on("uncaugthException", (ex) => {
+	serverLogger.log("error", ex.message);
+});
+
+process.on("unhandledRejection", (ex: IError) => {
+	serverLogger.log("error", ex.message);
+});
 
 const app = express();
 const server = http.createServer(app);
@@ -67,12 +77,9 @@ if (!config.get("jwtPrivateKey")) {
 	process.exit(1);
 }
 
-mongoose
-	.connect("mongodb://127.0.0.1/tictactoe")
-	.then(() => {
-		console.log("Connected to MongoBD...");
-	})
-	.catch((err) => console.error(err.message));
+mongoose.connect("mongodb://127.0.0.1/tictactoe").then(() => {
+	console.log("Connected to MongoBD...");
+});
 
 const port = process.env.PORT || 3900;
 server.listen(port, () => console.log(`Listening on port ${port}...`));

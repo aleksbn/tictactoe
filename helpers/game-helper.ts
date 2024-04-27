@@ -45,7 +45,7 @@ async function checkForWinner(game: Game) {
 				? "PC"
 				: (await UserModel.findById(game.winnerId))?.nickname;
 		const result = new GameResultDTO(`...and the winner is ${winner}`, 200);
-		result.winnerId = "PC";
+		result.winnerId = game.winnerId;
 		return result;
 	}
 

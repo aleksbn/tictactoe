@@ -58,16 +58,24 @@ router.get("/:players/:games", async (req: Request, res: Response) => {
 	}
 
 	// Generating moves
-	const allGames = await GameModel.find().lean().cast();
+	const allGames = await GameModel.find();
 	for (const game of allGames) {
 		if (!game.winnerId && game.moves.length === 0) {
-			let firstMove = !!Math.floor(Math.random() * 2); // true if player 1 plays first
+			let nextMove = !!Math.floor(Math.random() * 2); // true if player 1 plays first
 			while (!game.winnerId) {
-				let nextPlayer: string = firstMove ? game.creatorId : game.opponentId!;
-				game.moves.push(pcMove(game, nextPlayer));
-				await checkForWinner(game);
+				let nextPlayer: string = nextMove ? game.creatorId : game.opponentId!;
+				game.moves.push(
+					pcMove((await GameModel.findById(game.id).lean())!, nextPlayer)
+				);
 				await game.save();
-				firstMove = !firstMove;
+				let result = await checkForWinner(
+					(await GameModel.findById(game.id).lean())!
+				);
+				if (result.winnerId) {
+					game.winnerId = result.winnerId;
+					await game.save();
+				}
+				nextMove = !nextMove;
 			}
 		}
 	}
