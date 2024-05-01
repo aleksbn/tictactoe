@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "config";
+import { userDataLogger } from "../helpers/user-data-logger";
 import { NextFunction, Response } from "express";
 
 export default function (req: any, res: Response, next: NextFunction) {
@@ -11,6 +12,7 @@ export default function (req: any, res: Response, next: NextFunction) {
 		req.user = decoded;
 		next();
 	} catch (ex) {
-		res.status(400).send("Invalid token");
+		userDataLogger.warning("Illegal attempt. No token provided.");
+		res.status(400).send("Access denied. Invalid token.");
 	}
 }
