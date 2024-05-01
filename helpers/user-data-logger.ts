@@ -20,7 +20,7 @@ const userDataLogger = createLogger({
 	levels: customLevels.levels,
 	transports: [
 		new transports.Console(),
-		new transports.File({ filename: "user-data-log.log" }),
+		new transports.File({ filename: "user-data-log.log", dirname: "logs" }),
 	],
 });
 

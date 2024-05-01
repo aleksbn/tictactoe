@@ -1,9 +1,10 @@
 import { serverLogger } from "../helpers/server-logger";
 import mongoose from "mongoose";
+import config from "config";
 
 function getDb() {
-	mongoose.connect("mongodb://127.0.0.1/tictactoe").then(() => {
-		serverLogger.info("Application connected to MongoBD...");
+	mongoose.connect(config.get("db")).then(() => {
+		serverLogger.info(`Application connected to ${config.get("db")}...`);
 	});
 }
 

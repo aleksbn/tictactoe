@@ -20,7 +20,7 @@ const serverLogger = createLogger({
 	levels: customLevels.levels,
 	transports: [
 		new transports.Console({}),
-		new transports.File({ filename: "server-log.log" }),
+		new transports.File({ filename: "server-log.log", dirname: "logs" }),
 	],
 });
 
