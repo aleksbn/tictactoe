@@ -8,26 +8,32 @@ import { generateAuthToken } from "../helpers/auth-helper";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-	const { error } = validate(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-	let user = await UserModel.findOne({ email: req.body.email });
-	if (!user) return res.status(400).send("Invalid email or password.");
+  let user = await UserModel.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send("Invalid email or password.");
 
-	const validPassword = await bcrypt.compare(req.body.password, user.password);
-	if (!validPassword) return res.status(400).send("Invalid email or password.");
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) return res.status(400).send("Invalid email or password.");
 
-	const token = generateAuthToken(user._id.toString());
+  const token = generateAuthToken(user._id.toString());
 
-	res.send(token);
+  res.send(token);
 });
 
+/**
+ * Validates the request object against a Joi schema.
+ *
+ * @param {any} req - The request object to be validated.
+ * @return {Joi.ValidationResult} A promise that resolves to a Joi validation result.
+ */
 function validate(req: any) {
-	const schema = Joi.object({
-		email: Joi.string().min(5).max(255).required().email(),
-		password: Joi.string().min(5).max(255).required(),
-	});
-	return schema.validate(req);
+  const schema = Joi.object({
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(5).max(255).required(),
+  });
+  return schema.validate(req);
 }
 
 export default router;
